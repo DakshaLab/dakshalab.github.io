@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- This page's text lives below. Prices, phone, address, hours, tests and FAQs live in data.js. -->
+<!-- This page's text lives below. Phone, address, hours & other settings: config.js. Tests, packages, FAQs: data.js. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -12,7 +12,6 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
-
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="contact">
 <div id="site-header"></div>
@@ -20,38 +19,33 @@
 <section class="page-hero">
   <div class="mx-auto max-w-6xl px-4">
     <h1 class="h1">Contact &amp; Directions</h1>
-    <p class="mt-2 max-w-2xl text-slate-600">Visit our lab or book a free home collection anywhere in Bagalkot.</p>
+    <p class="mt-2 max-w-2xl text-slate-600">Find us in {{roomNo}}, inside {{hospital.name}} on {{hospital.road}}. Walk in or book an appointment.</p>
   </div>
 </section>
 <section class="py-12">
-  <div class="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-2">
-    <div class="space-y-6">
-      <div class="card">
-        <h2 class="font-semibold text-slate-900">Visit us</h2>
-        <address id="address" class="mt-2 not-italic text-slate-700"></address>
-        <a id="directions" href="#" target="_blank" rel="noopener" class="btn-primary mt-4 !py-2.5 text-sm">📍 Get directions</a>
-      </div>
+  <div class="mx-auto max-w-6xl space-y-8 px-4">
+    <div data-location="full"></div>
+    <div class="grid gap-6 md:grid-cols-2">
       <div class="card">
         <div class="flex items-center justify-between gap-3"><h2 class="font-semibold text-slate-900">Working hours</h2><span id="open-status"></span></div>
         <dl id="hours-table" class="mt-3 space-y-1 text-sm text-slate-700"></dl>
       </div>
       <div class="card">
-        <h2 class="font-semibold text-slate-900">Call or message</h2>
+        <h2 class="font-semibold text-slate-900">Call, message or book</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <a data-tel href="#" class="btn-outline">📞 <span data-site="phoneDisplay" class="ml-1"></span></a>
-          <a data-wa="Hello Daksha Lab, I have a question." href="#" class="btn-wa"><span data-icon="wa"></span>WhatsApp us</a>
+          <a data-wa="{{messages.general}}" href="#" class="btn-wa"><span data-icon="wa"></span>WhatsApp us</a>
+          <a href="book.html" class="btn-primary sm:col-span-2">📅 Book an appointment online</a>
         </div>
         <p class="mt-3 text-sm text-slate-500">Email: <span data-site="email"></span></p>
       </div>
-    </div>
-    <div id="map" class="grid min-h-80 place-items-center overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
-      <div class="p-8 text-center"><p class="text-4xl">🗺️</p><p class="mt-2 font-semibold text-slate-700">Find us on Google Maps</p><p class="mt-1 text-sm text-slate-500">Tap "Get directions" to open the route.</p></div>
     </div>
   </div>
 </section>
 
 </main>
 <div id="site-footer"></div>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="layout.js"></script>
 <script src="app.js"></script>

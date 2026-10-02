@@ -28,7 +28,7 @@ document.addEventListener("click", e => {
   if (!b) return;
   const i = findItem(b.dataset.share);
   const url = location.href.replace(/[^/]*$/, "") + (i.key.startsWith("pkg:") ? "packages.html" : "tests.html?q=" + encodeURIComponent(i.name));
-  const text = `${i.name} at ${SITE.name}, Bagalkot: ${inr(i.price)} with free home sample collection.`;
+  const text = `${i.name} at ${SITE.name}, Bagalkot: ${inr(i.price)} · walk-in or book an appointment.`;
   if (navigator.share) navigator.share({ title: SITE.name, text, url }).catch(() => {});
   else window.open("https://wa.me/?text=" + encodeURIComponent(text + "\n" + url), "_blank");
 });
@@ -70,7 +70,7 @@ function packageCard(p, compact) {
     <div class="mt-4">${fastBadge(p.fasting)}</div>
     <div class="mt-5 grid grid-cols-2 gap-2">
       <a href="book.html?items=${encodeURIComponent(key)}" class="btn-primary !py-2.5 text-sm">Book Now</a>
-      <a href="${waUrl(`Hi ${SITE.name}, I want to book the ${p.name} (${inr(p.price)}) with home collection.`)}" target="_blank" rel="noopener" class="btn-wa-outline !py-2.5 text-sm">WhatsApp</a>
+      <a href="${waUrl(`Hello ${SITE.name}, I want to book the ${p.name} (${inr(p.price)}). Please give me an appointment.`)}" target="_blank" rel="noopener" class="btn-wa-outline !py-2.5 text-sm">WhatsApp</a>
     </div>
   </article>`;
 }
@@ -155,7 +155,7 @@ function initPackages() {
 }
 
 /* =====================================================================
-   PAGE: BOOK HOME COLLECTION
+   PAGE: BOOK APPOINTMENT
    ===================================================================== */
 function initBook() {
   const form = document.getElementById("booking-form"), picker = document.getElementById("f-add"),
@@ -181,7 +181,7 @@ function initBook() {
         <span class="flex items-center gap-3"><span class="font-semibold">${inr(i.price)}</span><button type="button" data-remove="${i.key}" class="text-slate-400 hover:text-rose-600" aria-label="Remove">✕</button></span></li>`).join("")
       : `<li class="rounded-lg border border-dashed border-slate-300 px-3 py-3 text-sm text-slate-500">No tests added yet. Pick from the list below, or choose "Not sure" and we'll help.</li>`;
     const total = items.reduce((s, i) => s + i.price, 0);
-    totalEl.textContent = items.length ? inr(total) + (SITE.homeCollectionFee ? " + " + inr(SITE.homeCollectionFee) + " collection" : " · home collection FREE") : "—";
+    totalEl.textContent = items.length ? inr(total) : "—";
     hidden.value = items.map(i => i.name + " (" + inr(i.price) + ")").join(", ");
     const needFast = items.some(i => i.fasting);
     document.getElementById("fasting-tip").classList.toggle("hidden", !needFast);
@@ -191,7 +191,7 @@ function initBook() {
   list.addEventListener("click", e => { const b = e.target.closest("[data-remove]"); if (b) { chosen = chosen.filter(k => k !== b.dataset.remove); draw(); } });
   draw();
 
-  document.getElementById("areas").innerHTML = SITE.serviceAreas.map(a => `<li class="flex gap-2"><span class="text-teal-700">✓</span>${esc(a)}</li>`).join("");
+
 
   form.addEventListener("submit", async e => {
     e.preventDefault();
@@ -206,7 +206,7 @@ function initBook() {
     const d = Object.fromEntries(new FormData(form));
     const tests = (hidden.value || "") + (notSure ? (hidden.value ? " + " : "") + "Not sure / has prescription" : "");
     if (!SITE.web3formsKey) {
-      const msg = `New Home Collection Booking\nName: ${d.patient_name}\nAge/Gender: ${d.age || "-"} ${d.gender || ""}\nMobile: +91 ${d.phone}\nAddress: ${d.address}\nTests: ${tests}\nTotal: ${totalEl.textContent}\nSlot: ${d.time_slot}${d.preferred_date ? "\nDate: " + d.preferred_date : ""}${d.notes ? "\nNotes: " + d.notes : ""}`;
+      const msg = `New Appointment Request\nName: ${d.patient_name}\nAge/Gender: ${d.age || "-"} ${d.gender || ""}\nMobile: +91 ${d.phone}\nTests: ${tests}\nTotal: ${totalEl.textContent}\nSlot: ${d.time_slot}${d.preferred_date ? "\nDate: " + d.preferred_date : ""}${d.notes ? "\nNotes: " + d.notes : ""}`;
       window.open(waUrl(msg), "_blank");
       return done();
     }
@@ -223,7 +223,7 @@ function initBook() {
       done();
     } catch {
       showErr("Sorry, we couldn't send your booking. Please try WhatsApp or call us.");
-    } finally { btn.disabled = false; btn.textContent = "Confirm Booking"; }
+    } finally { btn.disabled = false; btn.textContent = "Request Appointment"; }
   });
   function showErr(m) { err.textContent = m; err.classList.remove("hidden"); }
   function done() {
@@ -247,8 +247,8 @@ function initFaq() {
     <p class="mt-3 text-sm text-slate-700">${groups[k].map(esc).join(" · ")}</p></div>`).join("");
   document.getElementById("faq-list").innerHTML = FAQS.map(f => `
     <details class="group rounded-xl bg-white p-5 ring-1 ring-slate-200 open:ring-teal-600">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">${esc(f.q)}<span class="text-teal-700 transition group-open:rotate-45 text-xl leading-none">+</span></summary>
-      <p class="mt-3 text-slate-600">${esc(f.a)}</p>
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-900">${esc(tpl(f.q))}<span class="text-teal-700 transition group-open:rotate-45 text-xl leading-none">+</span></summary>
+      <p class="mt-3 text-slate-600">${esc(tpl(f.a))}</p>
     </details>`).join("");
 }
 
@@ -265,10 +265,7 @@ function initContact() {
   const s = document.getElementById("open-status");
   s.textContent = st.text;
   s.className = "chip " + (st.open ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-600");
-  document.getElementById("address").innerHTML = SITE.addressLines.map(esc).join("<br>") + "<br>" + esc(SITE.landmark);
-  document.getElementById("directions").href = SITE.mapsLink;
-  const map = document.getElementById("map");
-  if (SITE.mapEmbedUrl) map.innerHTML = `<iframe src="${esc(SITE.mapEmbedUrl)}" class="h-full w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to ${esc(SITE.name)}"></iframe>`;
+
 }
 
 /* =====================================================================

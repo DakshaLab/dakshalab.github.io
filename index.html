@@ -1,18 +1,17 @@
 <!doctype html>
-<!-- This page's text lives below. Prices, phone, address, hours, tests and FAQs live in data.js. -->
+<!-- This page's text lives below. Phone, address, hours & other settings: config.js. Tests, packages, FAQs: data.js. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Daksha Lab Bagalkot | Diagnostic Centre &amp; Free Home Sample Collection</title>
-<meta name="description" content="Accurate blood tests and health checkups in Bagalkot, reviewed by qualified pathologists. Free home sample collection, same-day reports on WhatsApp.">
+<title>Daksha Lab Bagalkot | Diagnostic Lab inside Ashirwad Hospital, Navanagar Road</title>
+<meta name="description" content="Accurate blood tests and health checkups in Bagalkot, reviewed by qualified pathologists. Inside Ashirwad Hospital, Navanagar Road. Walk in or book an appointment; same-day reports on WhatsApp.">
 <meta name="theme-color" content="#0f766e">
-<meta property="og:title" content="Daksha Lab Bagalkot | Diagnostic Centre &amp; Free Home Sample Collection">
-<meta property="og:description" content="Accurate blood tests and health checkups in Bagalkot, reviewed by qualified pathologists. Free home sample collection, same-day reports on WhatsApp.">
+<meta property="og:title" content="Daksha Lab Bagalkot | Diagnostic Lab inside Ashirwad Hospital, Navanagar Road">
+<meta property="og:description" content="Accurate blood tests and health checkups in Bagalkot, reviewed by qualified pathologists. Inside Ashirwad Hospital, Navanagar Road. Walk in or book an appointment; same-day reports on WhatsApp.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"MedicalBusiness","name":"Daksha Lab","description":"Diagnostic laboratory with free home sample collection in Bagalkot, Karnataka","telephone":"+91-98765-43210","address":{"@type":"PostalAddress","streetAddress":"Shop No. __, Main Road, Navanagar","addressLocality":"Bagalkot","addressRegion":"Karnataka","postalCode":"587103","addressCountry":"IN"},"openingHours":["Mo-Sa 06:30-20:30","Su 07:00-13:00"],"areaServed":"Bagalkot"}</script>
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="home">
 <div id="site-header"></div>
@@ -21,12 +20,12 @@
 <section class="bg-gradient-to-b from-teal-50 to-white">
   <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
     <div>
-      <p class="chip bg-white text-teal-800 ring-1 ring-teal-200"><span class="h-2 w-2 rounded-full bg-emerald-500"></span> Free home sample collection across Bagalkot</p>
-      <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Bagalkot's Trusted Diagnostic Lab: <span class="text-teal-700">Accurate Reports, Delivered Fast</span></h1>
+      <p class="chip bg-white text-teal-800 ring-1 ring-teal-200"><span class="h-2 w-2 rounded-full bg-emerald-500"></span> Inside {{hospital.name}}, {{hospital.road}}, {{city}}</p>
+      <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">{{city}}'s Trusted Diagnostic Lab: <span class="text-teal-700">Accurate Reports, Delivered Fast</span></h1>
       <p class="mt-3 text-lg font-medium text-teal-800" lang="kn" data-site="kannadaTagline"></p>
-      <p class="mt-4 max-w-xl text-slate-600">Qualified pathologists, modern automated analyzers and trained phlebotomists at your doorstep. Most routine reports reach your WhatsApp the same day.</p>
+      <p class="mt-4 max-w-xl text-slate-600">Qualified pathologists and modern automated analyzers, conveniently located inside {{hospital.name}}. Walk in or book an appointment; most routine reports reach your WhatsApp the same day.</p>
       <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-        <a data-wa="Hello Daksha Lab, I would like to book a home sample collection." href="#" class="btn-wa !px-6 !py-3.5"><span data-icon="wa"></span>Book Home Collection via WhatsApp</a>
+        <a data-wa="{{messages.book}}" href="#" class="btn-wa !px-6 !py-3.5"><span data-icon="wa"></span>Book Appointment on WhatsApp</a>
         <a href="tests.html" class="btn-outline !px-6 !py-3.5">View Tests &amp; Prices</a>
       </div>
       <form action="tests.html" class="mt-6 flex max-w-md overflow-hidden rounded-xl bg-white ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-teal-600">
@@ -35,20 +34,20 @@
       </form>
     </div>
     <div class="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200">
-      <p class="text-sm font-semibold text-slate-500">How home collection works</p>
+      <p class="text-sm font-semibold text-slate-500">Book your visit: 3 easy ways</p>
       <ol class="mt-4 space-y-4">
-        <li class="flex gap-4"><span class="step">1</span><div><p class="font-semibold text-slate-900">Book in 1 minute</p><p class="text-sm text-slate-600">Online form or WhatsApp, with your test and address.</p></div></li>
-        <li class="flex gap-4"><span class="step">2</span><div><p class="font-semibold text-slate-900">We come to you</p><p class="text-sm text-slate-600">Trained phlebotomist, sealed single-use kit, your chosen slot.</p></div></li>
-        <li class="flex gap-4"><span class="step">3</span><div><p class="font-semibold text-slate-900">Report on WhatsApp</p><p class="text-sm text-slate-600">Pathologist-verified PDF, usually the same day.</p></div></li>
+        <li class="flex gap-4"><span class="step">1</span><div><p class="font-semibold text-slate-900">WhatsApp us</p><p class="text-sm text-slate-600">Send your test name or prescription photo and preferred time.</p></div></li>
+        <li class="flex gap-4"><span class="step">2</span><div><p class="font-semibold text-slate-900">Call the lab</p><p class="text-sm text-slate-600">Speak to our team and fix a convenient slot.</p></div></li>
+        <li class="flex gap-4"><span class="step">3</span><div><p class="font-semibold text-slate-900">Book online</p><p class="text-sm text-slate-600">Pick tests, date and time in the online form.</p></div></li>
       </ol>
-      <a href="book.html" class="btn-primary mt-6 w-full !py-3">Book Free Home Collection</a>
+      <div class="mt-6 grid grid-cols-2 gap-3"><a data-tel href="#" class="btn-outline !py-3">📞 Call</a><a href="book.html" class="btn-primary !py-3">Book Online</a></div>
     </div>
   </div>
   <div class="border-y border-slate-200 bg-white">
     <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-6 text-sm font-semibold text-slate-800 md:grid-cols-4">
       <p class="flex items-center gap-3"><span class="trust-ic">🎓</span>Qualified MD Pathologists</p>
       <p class="flex items-center gap-3"><span class="trust-ic">⏱</span>Same-Day Reports*</p>
-      <p class="flex items-center gap-3"><span class="trust-ic">🏠</span>Free Home Collection</p>
+      <p class="flex items-center gap-3"><span class="trust-ic">🏥</span>Inside {{hospital.name}}</p>
       <p class="flex items-center gap-3"><span class="trust-ic">📄</span>Reports on WhatsApp</p>
     </div>
   </div>
@@ -79,31 +78,42 @@
 <!-- WHY US -->
 <section class="py-16">
   <div class="mx-auto max-w-6xl px-4">
-    <h2 class="h2">Why Bagalkot Families Choose Daksha Lab</h2>
+    <h2 class="h2">Why {{city}} Families Choose {{name}}</h2>
     <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       <div class="card"><p class="text-2xl">🔬</p><h3 class="mt-3 font-semibold text-slate-900">Accurate results</h3><p class="mt-1 text-sm text-slate-600">Calibrated automated analyzers with daily quality control.</p></div>
       <div class="card"><p class="text-2xl">👩‍⚕️</p><h3 class="mt-3 font-semibold text-slate-900">Expert review</h3><p class="mt-1 text-sm text-slate-600">Every report signed by a qualified MD pathologist.</p></div>
       <div class="card"><p class="text-2xl">⚡</p><h3 class="mt-3 font-semibold text-slate-900">Fast reports</h3><p class="mt-1 text-sm text-slate-600">Most routine reports on WhatsApp the same day.</p></div>
-      <div class="card"><p class="text-2xl">📍</p><h3 class="mt-3 font-semibold text-slate-900">Truly local</h3><p class="mt-1 text-sm text-slate-600">No trips to Hubballi or Vijayapura for advanced tests.</p></div>
+      <div class="card"><p class="text-2xl">📍</p><h3 class="mt-3 font-semibold text-slate-900">Truly local</h3><p class="mt-1 text-sm text-slate-600">Inside {{hospital.name}}, {{hospital.road}}. No trips to Hubballi or Vijayapura for advanced tests.</p></div>
     </div>
   </div>
 </section>
 
+<!-- FIND US -->
+<section class="bg-slate-50 py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div><h2 class="h2">Find Us Inside {{hospital.name}}</h2><p class="mt-2 text-slate-600">{{roomNo}}, {{hospital.building}}, {{hospital.road}}, {{city}}. Walk in or book an appointment.</p></div>
+      <a href="contact.html" class="font-semibold text-teal-700 hover:underline">Hours &amp; contact →</a>
+    </div>
+    <div class="mt-8" data-location="full"></div>
+  </div>
+</section>
+
 <!-- PRESCRIPTION CTA -->
-<section class="pb-16">
+<section class="py-16">
   <div class="mx-auto max-w-6xl px-4">
     <div class="flex flex-col items-start justify-between gap-6 rounded-3xl bg-teal-900 p-8 text-white md:flex-row md:items-center">
       <div><h2 class="text-2xl font-bold">Have a doctor's prescription?</h2><p class="mt-1 text-teal-100">Send us a photo on WhatsApp. We'll book the right tests and tell you the total.</p></div>
-      <a data-wa="Hello Daksha Lab, I am sending my prescription photo. Please book the tests." href="#" class="btn-wa shrink-0 !px-6 !py-3.5"><span data-icon="wa"></span>Send Prescription</a>
+      <a data-wa="{{messages.prescription}}" href="#" class="btn-wa shrink-0 !px-6 !py-3.5"><span data-icon="wa"></span>Send Prescription</a>
     </div>
   </div>
 </section>
 <div id="tray" class="fixed inset-x-0 bottom-[62px] z-40 hidden border-t border-teal-800 bg-teal-900 text-white shadow-2xl lg:bottom-0 print:hidden">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
-    <div class="text-sm"><p class="font-semibold" data-count></p><p class="text-teal-200">Total <span class="font-bold text-white" data-total></span> · free home collection</p></div>
+    <div class="text-sm"><p class="font-semibold" data-count></p><p class="text-teal-200">Total <span class="font-bold text-white" data-total></span></p></div>
     <div class="flex items-center gap-2">
       <button id="tray-clear" type="button" class="hidden rounded-lg px-3 py-2 text-sm text-teal-100 hover:bg-white/10 sm:block">Clear</button>
-      <a data-book href="book.html" class="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-teal-900 hover:bg-teal-50">Book these →</a>
+      <a data-book href="book.html" class="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-teal-900 hover:bg-teal-50">Book appointment →</a>
     </div>
   </div>
 </div>
@@ -111,6 +121,7 @@
 
 </main>
 <div id="site-footer"></div>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="layout.js"></script>
 <script src="app.js"></script>

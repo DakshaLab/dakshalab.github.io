@@ -1,36 +1,35 @@
 <!doctype html>
-<!-- This page's text lives below. Prices, phone, address, hours, tests and FAQs live in data.js. -->
+<!-- This page's text lives below. Phone, address, hours & other settings: config.js. Tests, packages, FAQs: data.js. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About Us | Daksha Lab Bagalkot</title>
-<meta name="description" content="Daksha Lab, Bagalkot: accurate reports, qualified MD pathologists, same-day delivery and free home collection.">
+<meta name="description" content="Daksha Lab, Bagalkot: accurate reports, qualified MD pathologists, same-day reports. Located inside Ashirwad Hospital, Navanagar Road.">
 <meta name="theme-color" content="#0f766e">
 <meta property="og:title" content="About Us | Daksha Lab Bagalkot">
-<meta property="og:description" content="Daksha Lab, Bagalkot: accurate reports, qualified MD pathologists, same-day delivery and free home collection.">
+<meta property="og:description" content="Daksha Lab, Bagalkot: accurate reports, qualified MD pathologists, same-day reports. Located inside Ashirwad Hospital, Navanagar Road.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
-
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="about">
 <div id="site-header"></div>
 <main>
 <section class="page-hero">
   <div class="mx-auto max-w-6xl px-4">
-    <h1 class="h1">About Daksha Lab</h1>
-    <p class="mt-2 max-w-2xl text-slate-600">Accurate. Fast. Local. A diagnostic centre built for the people of Bagalkot.</p>
+    <h1 class="h1">About {{name}}</h1>
+    <p class="mt-2 max-w-2xl text-slate-600">Accurate. Fast. Local. A diagnostic centre built for the people of {{city}}.</p>
   </div>
 </section>
 <section class="py-12">
   <div class="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-2">
     <div class="space-y-4 text-slate-700">
-      <p>Daksha Lab was founded with a simple promise to the people of Bagalkot: <strong>every report should be accurate, on time, and easy to understand.</strong></p>
+      <p>{{name}} was founded with a simple promise to the people of {{city}}: <strong>every report should be accurate, on time, and easy to understand.</strong></p>
       <p>Every sample is processed on calibrated, fully automated analyzers and checked under daily internal quality control. Results are reviewed and signed by qualified MD pathologists before they reach you.</p>
       <p>We know waiting for results is stressful. That's why most routine reports are delivered the same day on WhatsApp and email, with a printed copy whenever you need it.</p>
-      <p>Our trained phlebotomists come to your home with sealed, single-use kits and temperature-controlled sample transport. That makes testing easier for elderly parents, expecting mothers and busy families.</p>
-      <p>From Navanagar to Vidyagiri, and from Ilkal to Mudhol, Bagalkot families choose Daksha Lab for one reason: <strong>they can trust the result.</strong></p>
+      <p>We are located inside the {{hospital.name}} premises on {{hospital.road}}, so patients can get tested right where they consult, and walk-in visitors can book an appointment to skip the wait.</p>
+      <p>From Navanagar to Vidyagiri, and from Ilkal to Mudhol, {{city}} families choose {{name}} for one reason: <strong>they can trust the result.</strong></p>
     </div>
     <div class="space-y-5">
       <div class="rounded-2xl bg-teal-900 p-6 text-white">
@@ -41,7 +40,7 @@
       <div class="grid grid-cols-2 gap-4">
         <div class="card"><p class="text-2xl font-extrabold text-teal-700">MD</p><p class="mt-1 text-sm text-slate-600">Pathologist-verified reports</p></div>
         <div class="card"><p class="text-2xl font-extrabold text-teal-700">Same day</p><p class="mt-1 text-sm text-slate-600">Most routine reports</p></div>
-        <div class="card"><p class="text-2xl font-extrabold text-teal-700">₹0</p><p class="mt-1 text-sm text-slate-600">Home collection charge</p></div>
+        <div class="card"><p class="text-2xl font-extrabold text-teal-700">Walk-in</p><p class="mt-1 text-sm text-slate-600">or book an appointment</p></div>
         <div class="card"><p class="text-2xl font-extrabold text-teal-700">7 days</p><p class="mt-1 text-sm text-slate-600">Open every day of the week</p></div>
       </div>
       <div class="card"><h2 class="font-semibold text-slate-900">Our quality promise</h2>
@@ -52,6 +51,7 @@
 
 </main>
 <div id="site-footer"></div>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="layout.js"></script>
 <script src="app.js"></script>

@@ -1,33 +1,32 @@
 <!doctype html>
-<!-- This page's text lives below. Prices, phone, address, hours, tests and FAQs live in data.js. -->
+<!-- This page's text lives below. Phone, address, hours & other settings: config.js. Tests, packages, FAQs: data.js. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book Free Home Sample Collection | Daksha Lab Bagalkot</title>
-<meta name="description" content="Book a free home blood sample collection anywhere in Bagalkot. Choose your tests and time slot online or on WhatsApp.">
+<title>Book an Appointment | Daksha Lab Bagalkot</title>
+<meta name="description" content="Book a lab appointment at Daksha Lab, inside Ashirwad Hospital, Navanagar Road, Bagalkot. Choose tests and a time online, on WhatsApp or by phone.">
 <meta name="theme-color" content="#0f766e">
-<meta property="og:title" content="Book Free Home Sample Collection | Daksha Lab Bagalkot">
-<meta property="og:description" content="Book a free home blood sample collection anywhere in Bagalkot. Choose your tests and time slot online or on WhatsApp.">
+<meta property="og:title" content="Book an Appointment | Daksha Lab Bagalkot">
+<meta property="og:description" content="Book a lab appointment at Daksha Lab, inside Ashirwad Hospital, Navanagar Road, Bagalkot. Choose tests and a time online, on WhatsApp or by phone.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
-
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="book">
 <div id="site-header"></div>
 <main>
 <section class="page-hero">
   <div class="mx-auto max-w-6xl px-4">
-    <h1 class="h1">Book Free Home Collection</h1>
-    <p class="mt-2 max-w-2xl text-slate-600">Share your details and our team will call you within 30 minutes (during working hours) to confirm your slot.</p>
+    <h1 class="h1">Book an Appointment</h1>
+    <p class="mt-2 max-w-2xl text-slate-600">Choose your tests and a time to visit our lab inside {{hospital.name}}. Prefer to talk? <a data-tel href="#" class="font-semibold text-teal-700 hover:underline">Call us</a> or <a data-wa="{{messages.book}}" href="#" class="font-semibold text-green-700 hover:underline">WhatsApp us</a>.</p>
   </div>
 </section>
 <section class="py-12">
   <div class="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-5">
     <form id="booking-form" novalidate class="space-y-5 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 lg:col-span-3">
-      <input type="hidden" name="subject" value="New Home Collection Booking – Daksha Lab">
-      <input type="hidden" name="from_name" value="Daksha Lab Website">
+      <input type="hidden" name="subject" value="New Appointment Request – {{name}}">
+      <input type="hidden" name="from_name" value="{{name}} Website">
       <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
       <input type="hidden" id="f-tests" name="tests_selected">
 
@@ -52,36 +51,36 @@
       </fieldset>
 
       <fieldset class="space-y-4">
-        <legend class="text-sm font-semibold text-slate-900">3. Address &amp; time</legend>
-        <div><label for="f-address" class="label">Full Address &amp; Landmark (Bagalkot) *</label><textarea id="f-address" name="address" rows="3" required placeholder="e.g. House No. 12, Sector 45, Navanagar, near Ganesh Temple" class="field"></textarea></div>
+        <legend class="text-sm font-semibold text-slate-900">3. Visit date &amp; time</legend>
         <div class="grid gap-4 sm:grid-cols-2">
-          <div><label for="f-date" class="label">Preferred Date</label><input id="f-date" name="preferred_date" type="date" class="field"></div>
+          <div><label for="f-date" class="label">Preferred Date *</label><input id="f-date" name="preferred_date" type="date" required class="field"></div>
           <div><label for="f-slot" class="label">Preferred Time Slot *</label><select id="f-slot" name="time_slot" required class="field"></select></div>
         </div>
         <div><label for="f-notes" class="label">Notes (optional)</label><input id="f-notes" name="notes" type="text" placeholder="e.g. elderly patient, call before coming" class="field"></div>
       </fieldset>
 
-      <label class="flex items-start gap-2 text-sm text-slate-600"><input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-teal-700"> I agree to Daksha Lab contacting me about this booking and using my details only for this purpose.</label>
+      <label class="flex items-start gap-2 text-sm text-slate-600"><input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-teal-700"> I agree to {{name}} contacting me about this booking and using my details only for this purpose.</label>
       <p id="form-error" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-700" role="alert"></p>
-      <button type="submit" class="btn-primary w-full !py-3.5">Confirm Booking</button>
+      <button type="submit" class="btn-primary w-full !py-3.5">Request Appointment</button>
       <div id="thank-you" class="hidden rounded-2xl bg-emerald-50 p-6 text-center ring-1 ring-emerald-200" role="status">
-        <p class="text-2xl">✅</p><h2 class="mt-2 text-xl font-bold text-emerald-900">Booking received. Thank you!</h2>
-        <p class="mt-1 text-emerald-800">Our team will call you shortly to confirm your home collection slot.</p>
+        <p class="text-2xl">✅</p><h2 class="mt-2 text-xl font-bold text-emerald-900">Appointment request received. Thank you!</h2>
+        <p class="mt-1 text-emerald-800">Our team will call you within {{callbackTime}} to confirm your appointment.</p>
       </div>
     </form>
 
     <aside class="space-y-6 lg:col-span-2">
-      <div class="card"><h2 class="font-semibold text-slate-900">Areas we cover</h2><ul id="areas" class="mt-3 grid grid-cols-1 gap-2 text-sm text-slate-700 sm:grid-cols-2 lg:grid-cols-1"></ul><p class="mt-3 text-xs text-slate-500">Outside these areas? Message us and we'll try our best.</p></div>
+      <div data-location="compact"></div>
       <div class="card"><h2 class="font-semibold text-slate-900">Before your visit</h2>
-        <ul class="mt-3 space-y-2 text-sm text-slate-700"><li>• Keep fasting if your test needs it (water is OK)</li><li>• Keep your doctor's prescription handy</li><li>• Wear a loose sleeve for easy sample collection</li><li>• Pay after collection: cash or UPI</li></ul></div>
-      <div class="rounded-2xl bg-green-50 p-6 ring-1 ring-green-200"><h2 class="font-semibold text-green-900">Prefer WhatsApp?</h2><p class="mt-1 text-sm text-green-800">Send your test name or prescription photo and address.</p>
-        <a data-wa="Hello Daksha Lab, I would like to book a home sample collection." href="#" class="btn-wa mt-4 w-full"><span data-icon="wa"></span>Chat on WhatsApp</a></div>
+        <ul class="mt-3 space-y-2 text-sm text-slate-700"><li>• Keep fasting if your test needs it (water is OK)</li><li>• Bring your doctor's prescription, if any</li><li>• Wear a loose sleeve for easy sample collection</li><li>• Pay at the lab: cash or UPI</li></ul></div>
+      <div class="rounded-2xl bg-green-50 p-6 ring-1 ring-green-200"><h2 class="font-semibold text-green-900">Prefer WhatsApp?</h2><p class="mt-1 text-sm text-green-800">Send your test name or prescription photo and preferred time.</p>
+        <a data-wa="{{messages.book}}" href="#" class="btn-wa mt-4 w-full"><span data-icon="wa"></span>Chat on WhatsApp</a></div>
     </aside>
   </div>
 </section>
 
 </main>
 <div id="site-footer"></div>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="layout.js"></script>
 <script src="app.js"></script>

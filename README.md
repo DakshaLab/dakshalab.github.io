@@ -7,31 +7,32 @@ https://(your site address)
 
 | File | What it is | Edit it when… |
 |---|---|---|
-| **data.js** | ALL content: phone, WhatsApp, address, hours, offer banner, tests, prices, packages, FAQs, service areas, time slots, form key | Prices change, add/remove a test, new offer, new phone number |
-| layout.js | Shared header menu, footer, mobile Call/WhatsApp/Book bar | Adding a new page to the menu |
-| app.js | Features: test search/filter, Add-to-booking, booking form, FAQ, contact hours | Rarely |
-| index.html | Home page text | Changing home page headings |
-| tests.html | Test catalog page | Rarely (tests come from data.js) |
-| packages.html | Health packages page | Rarely (packages come from data.js) |
-| book.html | Home collection booking form | Changing form fields |
-| about.html | About Us text | Updating the story or team |
-| faq.html | FAQ page (questions come from data.js) | Rarely |
-| contact.html | Address, hours, map | Rarely (details come from data.js) |
-| 404.html | "Page not found" page | Never |
+| **config.js** | **All settings ("global variables")**: name, phone, WhatsApp, email, room, hospital, address, PIN, Google Maps links, hours, holiday notice, appointment slots, offer banner, doctor & registration numbers, social links, WhatsApp messages, website address | Any contact/location/hours/offer detail changes |
+| **data.js** | Catalog: test categories, tests & prices, packages, FAQs | Prices change, add/remove a test or FAQ |
+| layout.js | Shared header, footer, map block, mobile bar, Google business info | Adding a page to the menu |
+| app.js | Features: test search/filter, booking form, FAQ, hours | Rarely |
+| index / tests / packages / book / about / faq / contact / 404 .html | Page text | Rewording a page |
 | styles.css | Compiled design (do not edit by hand) | Never by hand |
-| input.css | Design source: colours, buttons, cards | Changing the look (then rebuild styles.css) |
-| robots.txt, sitemap.xml | Help Google find the pages | Adding a new page |
+| input.css | Design source: colours, buttons, cards | Changing the look |
+| robots.txt, sitemap.xml | Help Google find the pages | Website address changes |
+
+### Using settings inside page text
+Write `{{settingName}}` anywhere in a page or in data.js and it is filled in from config.js,
+e.g. `{{name}}`, `{{phoneDisplay}}`, `{{city}}`, `{{roomNo}}`, `{{hospital.name}}`, `{{fullAddress}}`, `{{callbackTime}}`.
+
+Note: browser-tab titles and link-preview text are written into the pages when they are built.
+If you change the lab or hospital name, ask Claude to rebuild so those update too.
 
 ## Everyday edits (no coding)
 
-1. Open the file on GitHub (usually data.js) and tap the pencil icon ✏️.
+1. Open the file on GitHub (config.js for settings, data.js for tests/prices) and tap the pencil icon ✏️.
 2. Change only the text inside "quotes" or the numbers.
 3. Tap **Commit changes**. The site updates in 1–2 minutes.
 
-## Booking form
+## Appointment form
 
-- With `web3formsKey: ""`, form bookings open WhatsApp with all details filled in.
-- To receive bookings by **email** instead, get a free key at https://web3forms.com (enter the lab's email address), paste it into `web3formsKey` in data.js.
+- With `web3formsKey: ""`, appointment requests open WhatsApp with all details filled in.
+- To receive appointment requests by **email** instead, get a free key at https://web3forms.com (enter the lab's email address), paste it into `web3formsKey` in config.js.
 
 ## Rebuilding styles.css (only if new design classes are added)
 

@@ -1,56 +1,14 @@
 /* =====================================================================
-   DAKSHA LAB – WEBSITE CONTENT FILE
+   DAKSHA LAB – CATALOG  (tests, packages, FAQs)
    ---------------------------------------------------------------------
-   This is the ONLY file you need to edit for day-to-day changes:
-   prices, tests, packages, phone number, address, hours, offers, FAQs.
+   Phone, address, hours, offers and other settings are in config.js.
 
-   How to edit on GitHub:  open data.js → tap the ✏️ pencil → change the
-   text inside "quotes" or the numbers → tap "Commit changes".
-
+   How to edit on GitHub: open data.js → tap ✏️ → change values →
+   tap "Commit changes".
    Rules: keep the quotes "", commas , and brackets [ ] { } as they are.
    Prices are plain numbers (no ₹ sign, no commas):  price: 1499
+   You can use settings in text, e.g. {{name}}, {{fullAddress}}, {{phoneDisplay}}.
    ===================================================================== */
-
-const SITE = {
-  name: "Daksha Lab",
-  tagline: "Diagnostic Centre · Bagalkot",
-  kannadaTagline: "ನಿಖರ ವರದಿ, ನಿಮ್ಮ ಮನೆ ಬಾಗಿಲಿಗೆ",
-
-  // Contact ------------------------------------------------------------
-  phone: "919876543210",            // 91 + 10-digit number, no spaces or +  (used for Call)
-  whatsapp: "919876543210",         // WhatsApp number in the same format
-  phoneDisplay: "+91 98765 43210",  // how the number is shown on the site
-  email: "info@dakshalab.in",
-
-  // Address --------------------------------------------------------------
-  addressLines: ["Shop No. __, Main Road, Navanagar", "Bagalkot, Karnataka 587103"],
-  landmark: "Near ________",
-  mapsLink: "https://www.google.com/maps/search/?api=1&query=Daksha+Lab+Bagalkot",
-  mapEmbedUrl: "",                  // optional: Google Maps → Share → Embed a map → copy only the src="..." link
-
-  // Opening hours (24-hour time). days: 0=Sun 1=Mon ... 6=Sat ------------
-  hours: [
-    { label: "Monday – Saturday", days: [1, 2, 3, 4, 5, 6], open: "06:30", close: "20:30" },
-    { label: "Sunday",            days: [0],                open: "07:00", close: "13:00" },
-  ],
-  homeCollectionFrom: "6:00 AM",
-
-  // Home collection areas -------------------------------------------------
-  serviceAreas: ["Navanagar (all sectors)", "Vidyagiri", "Old Bagalkot", "Kaladgi Road", "Gaddankeri Cross", "Seemikeri"],
-  homeCollectionFee: 0,             // 0 = free
-  timeSlots: ["6:00 – 7:00 AM (best for fasting tests)", "7:00 – 8:00 AM (best for fasting tests)", "8:00 – 10:00 AM", "10:00 AM – 12:00 PM", "4:00 – 6:00 PM"],
-
-  // Booking form: paste your free key from web3forms.com to receive bookings by email.
-  // Leave empty ("") and bookings are sent to your WhatsApp instead.
-  web3formsKey: "",
-
-  // Top banner offer (set show: false to hide) ----------------------------
-  offer: { show: true, text: "Dasara offer: Executive Health Checkup at ₹2,999 (save ₹1,800) + free home collection" },
-
-  // Pathologist / registrations (fill in real details) ---------------------
-  pathologist: { name: "Dr. ________", qualification: "MD (Pathology)", regNo: "KMC Reg. No. ______" },
-  kpmeRegNo: "KPME Reg. No. ______",
-};
 
 /* ---------------------------------------------------------------------
    TEST CATEGORIES (used for the filter buttons on the Tests page)
@@ -125,12 +83,14 @@ const PACKAGES = [
    FREQUENTLY ASKED QUESTIONS
    --------------------------------------------------------------------- */
 const FAQS = [
-  { q: "Is home sample collection really free?", a: "Yes. Home collection is free on all tests and packages within our Bagalkot service areas." },
+  { q: "Where is {{name}} located?", a: "{{roomNo}}, inside {{fullAddress}}. Tap 'Get directions' on the Contact page to open Google Maps." },
+  { q: "Do I need an appointment?", a: "Walk-ins are welcome during working hours. Booking an appointment by WhatsApp, phone or the online form helps you avoid waiting, especially for early-morning fasting tests." },
+  { q: "Do you offer home sample collection?", a: "Not at the moment. Please visit the lab inside {{hospital.name}}; book an appointment to keep your visit short." },
   { q: "What does fasting mean?", a: "No food or drinks except plain water for the hours mentioned (usually 8–12 hours). Take your regular medicines unless your doctor advises otherwise." },
   { q: "Can I take my thyroid tablet before the test?", a: "Please give the sample first and take your thyroid tablet after the sample is collected." },
   { q: "When will I get my report?", a: "Most routine reports are sent on WhatsApp and email the same day. Specialised tests like Vitamin D or B12 may take until the next day. The expected time is shown on each test." },
   { q: "Who checks my report?", a: "Every report is reviewed and signed by a qualified MD pathologist before it is released." },
-  { q: "How do I pay?", a: "Pay at the lab or at home after sample collection by cash or UPI (Google Pay, PhonePe, Paytm)." },
+  { q: "How do I pay?", a: "Pay at the lab by cash or UPI (Google Pay, PhonePe, Paytm)." },
   { q: "Do I need a doctor's prescription?", a: "Not for most routine tests. If you have a prescription, send a photo on WhatsApp and we will book the right tests for you." },
   { q: "Is my information kept private?", a: "Yes. Your details and reports are used only for your testing and are shared only with you (and your doctor if you ask us to)." },
 ];
