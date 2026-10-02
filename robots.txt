@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://muttubiradar.github.io/daksh-lab-bagalkot/sitemap.xml

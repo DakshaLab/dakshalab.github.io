@@ -1,0 +1,24 @@
+@import "tailwindcss" source(none);
+@source "./*.html";
+@source "./*.js";
+
+/* Reusable building blocks – change a style here and it updates everywhere */
+@layer components {
+  .h1 { @apply text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl; }
+  .h2 { @apply text-3xl font-bold tracking-tight text-slate-900; }
+  .page-hero { @apply bg-gradient-to-b from-teal-50 to-white py-10 sm:py-14; }
+  .card { @apply rounded-2xl bg-white p-6 ring-1 ring-slate-200; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold; }
+  .label { @apply block text-sm font-medium text-slate-700; }
+  .field { @apply mt-1 w-full rounded-lg bg-white px-3 py-2.5 text-slate-900 ring-1 ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-teal-600 focus:outline-none; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-colors bg-teal-700 text-white hover:bg-teal-800; }
+  .btn-outline { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-colors bg-white text-slate-800 ring-1 ring-slate-300 hover:bg-slate-50; }
+  .btn-added { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-colors bg-teal-50 text-teal-800 ring-1 ring-teal-600; }
+  .btn-wa { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-colors bg-green-600 text-white hover:bg-green-700; }
+  .btn-wa-outline { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-colors text-green-700 ring-1 ring-green-600/40 hover:bg-green-50; }
+  .step { @apply grid h-9 w-9 shrink-0 place-items-center rounded-full bg-teal-700 font-bold text-white; }
+  .trust-ic { @apply grid h-10 w-10 shrink-0 place-items-center rounded-full bg-teal-50 text-lg; }
+  .cat-chip { @apply shrink-0 rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50; }
+  .cat-chip.is-active { @apply bg-teal-700 text-white ring-teal-700; }
+}
+@media print { header, footer, nav { display: none !important; } }

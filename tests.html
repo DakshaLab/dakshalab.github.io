@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- This page's text lives below. Prices, phone, address, hours, tests and FAQs live in data.js. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tests &amp; Prices | Daksha Lab Bagalkot</title>
+<meta name="description" content="Blood test prices in Bagalkot: CBC, thyroid, sugar, HbA1c, lipid, liver, kidney, vitamin tests and more, with fasting rules and free home collection.">
+<meta name="theme-color" content="#0f766e">
+<meta property="og:title" content="Tests &amp; Prices | Daksha Lab Bagalkot">
+<meta property="og:description" content="Blood test prices in Bagalkot: CBC, thyroid, sugar, HbA1c, lipid, liver, kidney, vitamin tests and more, with fasting rules and free home collection.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="bg-white font-sans text-slate-800 antialiased" data-page="tests">
+<div id="site-header"></div>
+<main>
+<section class="page-hero print:hidden">
+  <div class="mx-auto max-w-6xl px-4">
+    <h1 class="h1">Tests &amp; Prices</h1>
+    <p class="mt-2 max-w-2xl text-slate-600">Transparent prices, no hidden charges. Free home collection on every test. Select multiple tests and book them together.</p>
+  </div>
+</section>
+
+<section class="py-10 print:hidden">
+  <div class="mx-auto max-w-6xl px-4">
+    <div class="flex flex-col gap-3 md:flex-row md:items-center">
+      <input id="test-search" type="search" placeholder="Search tests: sugar, thyroid, vitamin, fever…" class="field !mt-0 md:max-w-md" aria-label="Search tests">
+      <div class="flex items-center gap-3 md:ml-auto">
+        <label for="test-sort" class="text-sm text-slate-600">Sort</label>
+        <select id="test-sort" class="field !mt-0 !w-auto">
+          <option value="">Recommended</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="name">Name A–Z</option>
+        </select>
+        <button id="print-btn" type="button" class="btn-outline !py-2.5 text-sm">🖨 Price list</button>
+      </div>
+    </div>
+    <div id="cat-chips" class="mt-4 flex gap-2 overflow-x-auto pb-2"></div>
+    <p id="result-count" class="mt-2 text-sm text-slate-500"></p>
+    <div id="test-grid" class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+    <div id="no-results" class="hidden rounded-xl bg-slate-50 p-8 text-center">
+      <p class="font-semibold text-slate-800">Can't find your test?</p>
+      <p class="mt-1 text-sm text-slate-600">We do many more tests than listed here. Ask us on WhatsApp.</p>
+      <a data-wa="Hello Daksha Lab, do you do this test: " href="#" class="btn-wa mt-4 !px-5"><span data-icon="wa"></span>Ask on WhatsApp</a>
+    </div>
+    <p class="mt-8 rounded-xl bg-amber-50 p-4 text-sm text-amber-900 ring-1 ring-amber-200"><strong>Fasting means</strong> no food or drinks except plain water. Keep taking regular medicines unless your doctor says otherwise. For thyroid tests, give the sample <em>before</em> your thyroid tablet.</p>
+  </div>
+</section>
+
+<!-- printable price list (only visible when printing) -->
+<section class="hidden print:block">
+  <h1 class="text-2xl font-bold">Daksha Lab, Bagalkot: Price List</h1>
+  <p class="text-sm"><span data-site="phoneDisplay"></span> · Free home collection</p>
+  <table class="mt-4 w-full text-sm"><thead><tr><th class="text-left">Test</th><th class="text-left">Fasting</th><th class="text-right">Price</th></tr></thead><tbody id="price-list"></tbody></table>
+</section>
+<div id="tray" class="fixed inset-x-0 bottom-[62px] z-40 hidden border-t border-teal-800 bg-teal-900 text-white shadow-2xl lg:bottom-0 print:hidden">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+    <div class="text-sm"><p class="font-semibold" data-count></p><p class="text-teal-200">Total <span class="font-bold text-white" data-total></span> · free home collection</p></div>
+    <div class="flex items-center gap-2">
+      <button id="tray-clear" type="button" class="hidden rounded-lg px-3 py-2 text-sm text-teal-100 hover:bg-white/10 sm:block">Clear</button>
+      <a data-book href="book.html" class="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-teal-900 hover:bg-teal-50">Book these →</a>
+    </div>
+  </div>
+</div>
+
+
+</main>
+<div id="site-footer"></div>
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
