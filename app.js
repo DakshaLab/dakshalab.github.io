@@ -50,7 +50,7 @@ function testCard(t) {
     ${t.note ? `<p class="mt-2 text-xs text-slate-500">${esc(t.note)}</p>` : ""}
     <div class="mt-4 flex items-center justify-between gap-3">
       <span class="text-2xl font-bold text-slate-900">${inr(t.price)}</span>
-      <button data-add="${t.id}" class="${sel ? "btn-added" : "btn-outline"} !px-4 !py-2 text-sm">${sel ? "✓ Added" : "+ Add"}</button>
+      <button data-add="${t.id}" class="${sel ? "btn-added" : "btn-outline"} !px-4 !py-2 text-sm">${esc(sel ? (SITE.text.tests.addedButton || "✓ Added") : (SITE.text.tests.addButton || "+ Add"))}</button>
     </div>
   </article>`;
 }
@@ -69,7 +69,7 @@ function packageCard(p, compact) {
     ${compact ? "" : `<ul class="mt-4 flex-1 space-y-1.5 text-sm text-slate-700">${p.includes.map(i => `<li class="flex gap-2"><span class="text-teal-700">✓</span>${esc(i)}</li>`).join("")}</ul>`}
     <div class="mt-4">${fastBadge(p.fasting)}</div>
     <div class="mt-5 grid grid-cols-2 gap-2">
-      <a href="book.html?items=${encodeURIComponent(key)}" class="btn-primary !py-2.5 text-sm">Book Now</a>
+      <a href="book.html?items=${encodeURIComponent(key)}" class="btn-primary !py-2.5 text-sm">${esc(SITE.text.packages.bookButton || "Book Now")}</a>
       <a href="${waUrl(`Hello ${SITE.name}, I want to book the ${p.name} (${inr(p.price)}). Please give me an appointment.`)}" target="_blank" rel="noopener" class="btn-wa-outline !py-2.5 text-sm">WhatsApp</a>
     </div>
   </article>`;
@@ -205,25 +205,9 @@ function initBook() {
     }
     const d = Object.fromEntries(new FormData(form));
     const tests = (hidden.value || "") + (notSure ? (hidden.value ? " + " : "") + "Not sure / has prescription" : "");
-    if (!SITE.web3formsKey) {
-      const msg = `New Appointment Request\nName: ${d.patient_name}\nAge/Gender: ${d.age || "-"} ${d.gender || ""}\nMobile: +91 ${d.phone}\nTests: ${tests}\nTotal: ${totalEl.textContent}\nSlot: ${d.time_slot}${d.preferred_date ? "\nDate: " + d.preferred_date : ""}${d.notes ? "\nNotes: " + d.notes : ""}`;
-      window.open(waUrl(msg), "_blank");
-      return done();
-    }
-    const fd = new FormData(form);
-    fd.set("access_key", SITE.web3formsKey);
-    fd.set("tests", tests);
-    fd.set("estimated_total", totalEl.textContent);
-    const btn = form.querySelector("button[type=submit]");
-    btn.disabled = true; btn.textContent = "Sending…";
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { Accept: "application/json" }, body: fd });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.message);
-      done();
-    } catch {
-      showErr("Sorry, we couldn't send your booking. Please try WhatsApp or call us.");
-    } finally { btn.disabled = false; btn.textContent = "Request Appointment"; }
+    const msg = `New Appointment Request\nName: ${d.patient_name}\nAge/Gender: ${d.age || "-"} ${d.gender || ""}\nMobile: +91 ${d.phone}\nTests: ${tests}\nTotal: ${totalEl.textContent}\nSlot: ${d.time_slot}${d.preferred_date ? "\nDate: " + d.preferred_date : ""}${d.notes ? "\nNotes: " + d.notes : ""}`;
+    window.open(waUrl(msg), "_blank");
+    done();
   });
   function showErr(m) { err.textContent = m; err.classList.remove("hidden"); }
   function done() {
@@ -269,6 +253,30 @@ function initContact() {
 }
 
 /* =====================================================================
+   PAGE: POLICIES (all text from config.js → text.policies)
+   Lines starting with "## " = subheading, "- " = bullet point.
+   ===================================================================== */
+function initPolicies() {
+  const P = SITE.text.policies || {}, secs = P.sections || [];
+  document.getElementById("policy-nav").innerHTML = secs.map(s => `<a href="#${esc(s.id)}" class="cat-chip">${esc(tpl(s.title))}</a>`).join("");
+  const body = lines => {
+    let out = "", inList = false;
+    (lines || []).forEach(line => {
+      const t = esc(tpl(line));
+      if (line.startsWith("- ")) { if (!inList) { out += '<ul class="mt-3 list-disc space-y-1.5 pl-5">'; inList = true; } out += `<li>${t.slice(2)}</li>`; return; }
+      if (inList) { out += "</ul>"; inList = false; }
+      out += line.startsWith("## ") ? `<h3 class="mt-6 font-semibold text-slate-900">${t.slice(3)}</h3>` : `<p class="mt-3">${t}</p>`;
+    });
+    return out + (inList ? "</ul>" : "");
+  };
+  document.getElementById("policy-sections").innerHTML = secs.map(s => {
+    const box = s.id === "emergency" ? "rounded-2xl bg-rose-50 p-6 ring-1 ring-rose-200 text-rose-900" : (s.id === "info-only" ? "rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200" : (s.id === "contact-us" ? "card" : ""));
+    return `<article id="${esc(s.id)}" class="scroll-mt-24 ${box}"><h2 class="text-2xl font-bold ${s.id === "emergency" ? "text-rose-900" : "text-slate-900"}">${esc(tpl(s.title))}</h2>${body(s.content)}</article>`;
+  }).join("");
+  if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView(); }
+}
+
+/* =====================================================================
    PAGE: ABOUT
    ===================================================================== */
 function initAbout() {
@@ -277,5 +285,65 @@ function initAbout() {
   document.getElementById("patho-reg").textContent = p.regNo + " · " + SITE.kpmeRegNo;
 }
 
+/* =====================================================================
+   GOOGLE REVIEWS (live from Google, filtered by minStars) + testimonials
+   ===================================================================== */
+const starRow = n => `<span class="text-amber-500" aria-label="${n} out of 5 stars">${"★".repeat(Math.round(n))}<span class="text-slate-300">${"★".repeat(5 - Math.round(n))}</span></span>`;
+
+async function renderReviews() {
+  const box = document.getElementById("reviews");
+  if (!box) return;
+  const allLink = `<a href="${esc(SITE.mapsLink)}" target="_blank" rel="noopener" class="btn-outline !py-2.5 text-sm">Read all reviews on Google Maps</a>`;
+  const writeLink = SITE.reviewLink ? `<a href="${esc(SITE.reviewLink)}" target="_blank" rel="noopener" class="btn-primary !py-2.5 text-sm">⭐ Write a review</a>` : "";
+  const footer = `<div class="mt-6 flex flex-wrap gap-3">${allLink}${writeLink}</div>`;
+  if (TESTIMONIALS.length) {
+    box.innerHTML = `<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">${TESTIMONIALS.map(t => `
+      <article class="card flex flex-col"><p class="text-sm">${starRow(t.stars || 5)}</p>
+        <p class="mt-3 flex-1 text-sm text-slate-700">"${esc(tpl(t.text))}"</p>
+        <p class="mt-3 text-sm font-semibold text-slate-900">${t.link ? `<a href="${esc(t.link)}" target="_blank" rel="noopener" class="hover:underline">${esc(t.name)}</a>` : esc(t.name)}</p></article>`).join("")}</div>
+      <p class="mt-4 text-xs text-slate-500">Selected patient feedback, shared with permission. Read all reviews on Google Maps.</p>${footer}`;
+    return;
+  }
+  box.innerHTML = `<p class="text-slate-600">Read what patients say about us on Google Maps, or leave your own review.</p>${footer}`;
+}
+
+/* =====================================================================
+   PHOTO GALLERY – photos from the lab's own Google Maps listing only
+   ===================================================================== */
+function renderGallery() {
+  const sec = document.getElementById("gallery-section");
+  const own = (typeof GALLERY !== "undefined" ? GALLERY : []).filter(g => g.src);
+  if (!sec || !own.length) return;
+  sec.classList.remove("hidden");
+  document.getElementById("gallery").innerHTML = own.map(g => `
+    <figure class="overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
+      <img src="${esc(g.src)}" alt="${esc(tpl(g.caption || SITE.name))}" loading="lazy" class="aspect-[4/3] w-full object-cover">
+      ${g.caption ? `<figcaption class="px-4 py-2 text-sm text-slate-600">${esc(tpl(g.caption))}</figcaption>` : ""}
+    </figure>`).join("");
+  document.getElementById("gallery-more").href = SITE.mapsLink;
+}
+
+/* =====================================================================
+   EDITABLE PAGE TEXT LISTS (from config.js → text)
+   ===================================================================== */
+function renderBanner() {
+  const b = document.getElementById("home-banner"), B = SITE.banner || {};
+  if (!b || !B.show || !B.src) return;
+  const img = b.querySelector("img"); img.src = B.src; img.alt = tpl(B.alt || "");
+  b.classList.remove("hidden");
+}
+
+function renderTextLists() {
+  const T = SITE.text || {}, home = T.home || {}, fill = id => document.getElementById(id);
+  if (fill("home-steps")) fill("home-steps").innerHTML = (home.steps || []).map((s, i) => `<li class="flex gap-4"><span class="step">${i + 1}</span><div><p class="font-semibold text-slate-900">${esc(tpl(s.title))}</p><p class="text-sm text-slate-600">${esc(tpl(s.text))}</p></div></li>`).join("");
+  if (fill("home-trust")) fill("home-trust").innerHTML = (home.trust || []).map(t => `<p class="flex items-center gap-3"><span class="trust-ic">${esc(t.icon || "✓")}</span>${esc(tpl(t.text))}</p>`).join("");
+  if (fill("home-why")) fill("home-why").innerHTML = (home.why || []).map(w => `<div class="card"><p class="text-2xl">${esc(w.icon || "")}</p><h3 class="mt-3 font-semibold text-slate-900">${esc(tpl(w.title))}</h3><p class="mt-1 text-sm text-slate-600">${esc(tpl(w.text))}</p></div>`).join("");
+  if (fill("about-story")) fill("about-story").innerHTML = ((T.about || {}).story || []).map(p => `<p>${esc(tpl(p))}</p>`).join("");
+}
+
 /* ---------- start the right page ---------- */
-({ home: initHome, tests: initTests, packages: initPackages, book: initBook, faq: initFaq, contact: initContact, about: initAbout }[document.body.dataset.page] || (() => {}))();
+renderBanner();
+renderTextLists();
+renderReviews();
+renderGallery();
+({ home: initHome, tests: initTests, packages: initPackages, book: initBook, faq: initFaq, contact: initContact, about: initAbout, policies: initPolicies }[document.body.dataset.page] || (() => {}))();

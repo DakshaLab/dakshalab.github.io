@@ -3,14 +3,38 @@
    Change the menu once here and it updates on every page.
    ===================================================================== */
 
+/* =====================================================================
+   SITE = settings from config.js + values worked out from them
+   ===================================================================== */
+const SITE = (() => {
+  const c = CONFIG, h = c.hospital;
+  const fill = s => s.replace(/\{\{\s*([\w.]+)\s*\}\}/g, (m, k) => { const v = k.split(".").reduce((o, p) => (o == null ? o : o[p]), c); return v == null ? m : v; });
+  const addressLines = [`${c.roomNo}, ${h.name}`, `${h.building}, ${h.road}`, `${h.area}, ${c.city}, ${c.state} ${c.pin}`];
+  const mapQuery = `${c.name}, ${h.name}, ${h.building}, ${h.road}, ${c.city} ${c.pin}`;
+  return {
+    ...c,
+    addressLines,
+    fullAddress: addressLines.join(", "),
+    relationText: c.legal.relation === "part"
+      ? `${c.name} is the diagnostic laboratory of ${h.name}.`
+      : `${c.name} is an independently owned and managed laboratory operating from rented space inside the ${h.name} premises. It is not part of ${h.name}; all tests, reports, bills and patient data are the sole responsibility of ${c.name}.`,
+    landmark: `Inside ${h.name} premises`,
+    locationShort: `${h.name}, ${h.road}, ${c.city}`,
+    hospital: { ...h, address: `${h.building}, ${h.road}, ${h.area}, ${c.city}, ${c.state} ${c.pin}` },
+    howToReach: c.howToReach.map(fill),
+    mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=${c.mapZoom}&output=embed`,
+  };
+})();
+
+const NAV_T = (SITE.text && SITE.text.nav) || {};
 const NAV = [
-  { href: "index.html",    label: "Home",      page: "home" },
-  { href: "tests.html",    label: "Tests",     page: "tests" },
-  { href: "packages.html", label: "Packages",  page: "packages" },
-  { href: "book.html",     label: "Book Appointment", page: "book" },
-  { href: "about.html",    label: "About",     page: "about" },
-  { href: "faq.html",      label: "FAQ",       page: "faq" },
-  { href: "contact.html",  label: "Contact",   page: "contact" },
+  { href: "index.html",    label: NAV_T.home || "Home",      page: "home" },
+  { href: "tests.html",    label: NAV_T.tests || "Tests",     page: "tests" },
+  { href: "packages.html", label: NAV_T.packages || "Packages",  page: "packages" },
+  { href: "book.html",     label: NAV_T.book || "Book Appointment", page: "book" },
+  { href: "about.html",    label: NAV_T.about || "About",     page: "about" },
+  { href: "faq.html",      label: NAV_T.faq || "FAQ",       page: "faq" },
+  { href: "contact.html",  label: NAV_T.contact || "Contact",   page: "contact" },
 ];
 
 /* ---------- small helpers used by every page ---------- */
@@ -54,26 +78,33 @@ function openStatus() {
 }
 
 /* ---------- header ---------- */
+function setFavicon() {
+  if (!SITE.logo) return;
+  let link = document.querySelector('link[rel="icon"]');
+  if (!link) { link = document.createElement("link"); link.rel = "icon"; document.head.appendChild(link); }
+  link.href = SITE.logo;
+}
+
 function renderHeader() {
   const page = document.body.dataset.page;
   const st = openStatus();
-  const links = NAV.map(n => `<a href="${n.href}" class="${n.page === page ? "text-teal-700 font-semibold" : "text-slate-600 hover:text-teal-700"}">${n.label}</a>`).join("");
-  const mobileLinks = NAV.map(n => `<a href="${n.href}" class="block rounded-lg px-3 py-3 ${n.page === page ? "bg-teal-50 font-semibold text-teal-800" : "text-slate-700 hover:bg-slate-50"}">${n.label}</a>`).join("");
+  const links = NAV.map(n => `<a href="${n.href}" class="${n.page === page ? "text-teal-700 font-semibold" : "text-slate-600 hover:text-teal-700"}">${esc(n.label)}</a>`).join("");
+  const mobileLinks = NAV.map(n => `<a href="${n.href}" class="block rounded-lg px-3 py-3 ${n.page === page ? "bg-teal-50 font-semibold text-teal-800" : "text-slate-700 hover:bg-slate-50"}">${esc(n.label)}</a>`).join("");
   const el = document.getElementById("site-header");
   if (!el) return;
   el.outerHTML = `
   ${SITE.holidayNote ? `<div class="bg-amber-400 px-4 py-2 text-center text-xs font-semibold text-amber-950 sm:text-sm">📢 ${esc(tpl(SITE.holidayNote))}</div>` : ""}
-  ${SITE.offer.show ? `<div class="bg-teal-800 px-4 py-2 text-center text-xs font-medium text-white sm:text-sm">${esc(tpl(SITE.offer.text))} <a href="${SITE.offer.link || "book.html"}" class="ml-1 underline">View offer</a></div>` : ""}
+  ${SITE.offer.show ? `<div class="bg-teal-800 px-4 py-2 text-center text-xs font-medium text-white sm:text-sm">${esc(tpl(SITE.offer.text))} <a href="${SITE.offer.link || "book.html"}" class="ml-1 underline">${esc(NAV_T.offerLink || "View offer")}</a></div>` : ""}
   <header class="sticky top-0 z-40 border-b border-slate-200 bg-white">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
       <a href="index.html" class="flex items-center gap-2">
-        <span class="grid h-9 w-9 place-items-center rounded-lg bg-teal-700 text-white">${ICON.flask}</span>
+        ${SITE.logo ? `<img src="${esc(SITE.logo)}" alt="${esc(SITE.name)} logo" class="h-10 w-10 rounded-lg object-contain">` : `<span class="grid h-9 w-9 place-items-center rounded-lg bg-teal-700 text-white">${ICON.flask}</span>`}
         <span class="leading-tight"><span class="block text-lg font-bold text-slate-900">${esc(SITE.name)}</span><span class="block text-xs text-slate-500">${esc(SITE.tagline)}</span></span>
       </a>
       <nav class="hidden items-center gap-6 text-sm lg:flex">${links}</nav>
       <div class="flex items-center gap-2">
         <span class="hidden items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium sm:inline-flex ${st.open ? "bg-emerald-50 text-emerald-800" : "bg-slate-100 text-slate-600"}"><span class="h-2 w-2 rounded-full ${st.open ? "bg-emerald-500" : "bg-slate-400"}"></span>${st.text}</span>
-        <a href="book.html" class="btn-primary hidden !py-2 text-sm sm:inline-flex">Book Test</a>
+        <a href="book.html" class="btn-primary hidden !py-2 text-sm sm:inline-flex">${esc(NAV_T.bookButton || "Book Test")}</a>
         <button id="menu-btn" class="grid h-10 w-10 place-items-center rounded-lg ring-1 ring-slate-300 lg:hidden" aria-label="Open menu" aria-expanded="false">
           <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
@@ -98,21 +129,21 @@ function renderFooter() {
   <footer class="bg-slate-900 pb-20 text-slate-300 lg:pb-0">
     <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
       <div>
-        <p class="text-lg font-bold text-white">${esc(SITE.name)}</p>
+        <p class="flex items-center gap-2 text-lg font-bold text-white">${SITE.logo ? `<img src="${esc(SITE.logo)}" alt="" class="h-8 w-8 object-contain">` : ""}${esc(SITE.name)}</p>
         <p class="mt-1 text-sm">${esc(SITE.tagline)}</p>
         <address class="mt-4 text-sm not-italic leading-relaxed">${SITE.addressLines.map(esc).join("<br>")}<br>${esc(SITE.landmark)}</address>
-        <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm font-semibold"><a href="${directionsUrl()}" target="_blank" rel="noopener" class="text-teal-300 hover:underline">Get directions →</a><a href="${SITE.hospital.mapsLink}" target="_blank" rel="noopener" class="text-slate-300 hover:underline">${esc(SITE.hospital.name)} on Maps</a></div>
+        <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm font-semibold"><a href="${directionsUrl()}" target="_blank" rel="noopener" class="text-teal-300 hover:underline">${esc(NAV_T.directions || "Get directions →")}</a><a href="${SITE.hospital.mapsLink}" target="_blank" rel="noopener" class="text-slate-300 hover:underline">${esc(SITE.hospital.name)} on Maps</a></div>
       </div>
       <div>
-        <p class="font-semibold text-white">Working Hours</p>
+        <p class="font-semibold text-white">${esc(NAV_T.workingHours || "Working Hours")}</p>
         <dl class="mt-4 space-y-2 text-sm">${hours}</dl>
       </div>
       <div>
-        <p class="font-semibold text-white">Quick Links</p>
-        <ul class="mt-4 grid grid-cols-2 gap-2 text-sm">${NAV.map(n => `<li><a href="${n.href}" class="hover:text-white">${n.label}</a></li>`).join("")}</ul>
+        <p class="font-semibold text-white">${esc(NAV_T.quickLinks || "Quick Links")}</p>
+        <ul class="mt-4 grid grid-cols-2 gap-2 text-sm">${NAV.map(n => `<li><a href="${n.href}" class="hover:text-white">${esc(n.label)}</a></li>`).join("")}</ul>
       </div>
       <div>
-        <p class="font-semibold text-white">Contact</p>
+        <p class="font-semibold text-white">${esc(NAV_T.contactTitle || "Contact")}</p>
         <ul class="mt-4 space-y-2 text-sm">
           <li>Phone: <a href="${telUrl()}" class="text-white hover:underline">${esc(SITE.phoneDisplay)}</a></li>
           <li>WhatsApp: <a href="${waUrl(SITE.messages.general)}" target="_blank" rel="noopener" class="text-white hover:underline">Chat with us</a></li>
@@ -123,18 +154,25 @@ function renderFooter() {
       </div>
     </div>
     <div class="border-t border-white/10">
+      <div class="mx-auto max-w-6xl space-y-2 px-4 py-5 text-xs leading-relaxed text-slate-400">
+        <p>${esc(tpl((SITE.text.footer || {}).emergency || ""))}</p>
+        <p>${esc(tpl((SITE.text.footer || {}).infoOnly || ""))} <a href="policies.html#info-only" class="underline hover:text-white">Details</a></p>
+        <p>${esc(SITE.relationText)}</p>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
       <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-slate-400 sm:flex-row sm:justify-between">
-        <p>© ${new Date().getFullYear()} ${esc(SITE.name)}, Bagalkot. All rights reserved.</p>
-        <p>Report timing depends on the test. Prices may change; please confirm when booking.</p>
+        <p>© ${new Date().getFullYear()} ${esc(SITE.name)}, Bagalkot. ${esc((SITE.text.footer || {}).rights || "")}</p>
+        <p class="flex flex-wrap gap-x-3 gap-y-1"><a href="policies.html#disclaimer" class="hover:text-white">Medical Disclaimer</a><a href="policies.html#privacy" class="hover:text-white">Privacy Policy</a><a href="policies.html#terms" class="hover:text-white">Terms</a><a href="policies.html#refunds" class="hover:text-white">Refunds</a></p>
       </div>
     </div>
   </footer>
 
   <!-- Mobile bottom action bar -->
   <nav class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-slate-200 bg-white text-xs font-semibold lg:hidden" aria-label="Quick actions">
-    <a href="${telUrl()}" class="flex flex-col items-center gap-1 py-2.5 text-slate-700">${ICON.phone}Call</a>
-    <a href="${waUrl(SITE.messages.book)}" target="_blank" rel="noopener" class="flex flex-col items-center gap-1 py-2.5 text-green-700">${ICON.wa}WhatsApp</a>
-    <a href="book.html" class="flex flex-col items-center gap-1 bg-teal-700 py-2.5 text-white">${ICON.cal}Book Appointment</a>
+    <a href="${telUrl()}" class="flex flex-col items-center gap-1 py-2.5 text-slate-700">${ICON.phone}${esc(NAV_T.barCall || "Call")}</a>
+    <a href="${waUrl(SITE.messages.book)}" target="_blank" rel="noopener" class="flex flex-col items-center gap-1 py-2.5 text-green-700">${ICON.wa}${esc(NAV_T.barWhatsApp || "WhatsApp")}</a>
+    <a href="book.html" class="flex flex-col items-center gap-1 bg-teal-700 py-2.5 text-white">${ICON.cal}${esc(NAV_T.book || "Book Appointment")}</a>
   </nav>
 
   <!-- Desktop floating WhatsApp -->
@@ -147,6 +185,18 @@ function socialLinks() {
   const items = Object.entries(SITE.social || {}).filter(([, url]) => url);
   if (!items.length) return "";
   return `<p class="mt-4 flex gap-3 text-sm">${items.map(([k, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener" class="capitalize text-white hover:underline">${esc(k)}</a>`).join("")}</p>`;
+}
+
+/* ---------- lists from settings: <ul data-list="text.x.y"><template><li>{{.}}</li></template></ul> ---------- */
+function renderLists() {
+  document.querySelectorAll("[data-list]").forEach(el => {
+    const t = el.querySelector("template"); if (!t) return;
+    const items = el.dataset.list.split(".").reduce((o, k) => (o == null ? o : o[k]), SITE) || [];
+    const html = t.innerHTML;
+    el.innerHTML = items.map(it => typeof it === "object"
+      ? html.replace(/\{\{\.(\w+)\}\}/g, (m, k) => esc(it[k] ?? ""))
+      : html.replace(/\{\{\.\}\}/g, esc(it))).join("");
+  });
 }
 
 /* ---------- replace {{setting}} in page text, links, titles ---------- */
@@ -182,16 +232,17 @@ function fillPlaceholders() {
 
 /* ---------- location block: <div data-location="full"></div> or "compact" ---------- */
 function renderLocation() {
+  const LT = (SITE.text && SITE.text.contact) || {};
   document.querySelectorAll("[data-location]").forEach(el => {
     const compact = el.dataset.location === "compact";
     const map = `<div class="relative overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200 ${compact ? "h-48" : "h-72 md:h-full md:min-h-96"}">
         <iframe src="${esc(SITE.mapEmbedUrl)}" class="absolute inset-0 h-full w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Map: ${esc(SITE.name)}, ${esc(SITE.hospital.name)}"></iframe>
       </div>`;
     const buttons = `
-      <a href="${directionsUrl()}" target="_blank" rel="noopener" class="btn-primary !py-2.5 text-sm">📍 Directions</a>
-      <a href="${SITE.mapsLink}" target="_blank" rel="noopener" class="btn-outline !py-2.5 text-sm">View on Google Maps</a>`;
+      <a href="${directionsUrl()}" target="_blank" rel="noopener" class="btn-primary !py-2.5 text-sm">${esc(LT.directionsButton || "📍 Directions")}</a>
+      <a href="${SITE.mapsLink}" target="_blank" rel="noopener" class="btn-outline !py-2.5 text-sm">${esc(LT.mapsButton || "View on Google Maps")}</a>`;
     if (compact) {
-      el.innerHTML = `<div class="card"><h2 class="font-semibold text-slate-900">Where to find us</h2>
+      el.innerHTML = `<div class="card"><h2 class="font-semibold text-slate-900">${esc(LT.whereTitle || "Where to find us")}</h2>
         <address class="mt-2 text-sm not-italic text-slate-700">${SITE.addressLines.map(esc).join("<br>")}</address>
         <div class="mt-4">${map}</div><div class="mt-4 grid grid-cols-2 gap-2">${buttons}</div></div>`;
       return;
@@ -204,14 +255,14 @@ function renderLocation() {
           <address class="mt-1 not-italic text-slate-700">${SITE.addressLines.map(esc).join("<br>")}</address>
           <div class="mt-4 grid grid-cols-2 gap-2">${buttons}</div>
           <div class="mt-2 grid grid-cols-2 gap-2">
-            <a data-tel href="${telUrl()}" class="btn-outline !py-2.5 text-sm">📞 Call</a>
-            <a href="https://wa.me/?text=${encodeURIComponent(SITE.name + " – " + SITE.addressLines.join(", ") + "\n" + SITE.mapsLink)}" target="_blank" rel="noopener" class="btn-wa-outline !py-2.5 text-sm">Share location</a>
+            <a data-tel href="${telUrl()}" class="btn-outline !py-2.5 text-sm">${esc(LT.callButton || "📞 Call")}</a>
+            <a href="https://wa.me/?text=${encodeURIComponent(SITE.name + " – " + SITE.addressLines.join(", ") + "\n" + SITE.mapsLink)}" target="_blank" rel="noopener" class="btn-wa-outline !py-2.5 text-sm">${esc(LT.shareButton || "Share location")}</a>
           </div>
         </div>
         <div class="card">
-          <h3 class="font-semibold text-slate-900">How to reach us</h3>
+          <h3 class="font-semibold text-slate-900">${esc(LT.howToReachTitle || "How to reach us")}</h3>
           <ol class="mt-3 space-y-3">${SITE.howToReach.map((t, i) => `<li class="flex gap-3 text-sm text-slate-700"><span class="step !h-7 !w-7 text-xs">${i + 1}</span><span class="pt-1">${esc(t)}</span></li>`).join("")}</ol>
-          <a href="${SITE.hospital.mapsLink}" target="_blank" rel="noopener" class="mt-4 inline-block text-sm font-semibold text-teal-700 hover:underline">View ${esc(SITE.hospital.name)} on Google Maps →</a>
+          <a href="${SITE.hospital.mapsLink}" target="_blank" rel="noopener" class="mt-4 inline-block text-sm font-semibold text-teal-700 hover:underline">${esc(tpl(LT.hospitalLink || "View {{hospital.name}} on Google Maps →"))}</a>
         </div>
         ${SITE.reviewLink ? `<a href="${SITE.reviewLink}" target="_blank" rel="noopener" class="btn-outline w-full">⭐ Rate us on Google</a>` : ""}
       </div>
@@ -220,7 +271,9 @@ function renderLocation() {
   });
 }
 
+renderLists();
 fillTemplates();
+setFavicon();
 renderHeader();
 renderFooter();
 renderLocation();

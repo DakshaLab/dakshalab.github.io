@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Daksha Lab logo">
+  <defs>
+    <linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#0f766e"/></linearGradient>
+  </defs>
+  <!-- hexagon = molecule / precision -->
+  <path d="M60 6 L107 33 V87 L60 114 L13 87 V33 Z" fill="url(#gc)"/>
+  <!-- test tube, tilted -->
+  <g transform="rotate(-30 60 60)">
+    <rect x="50" y="22" width="20" height="62" rx="10" fill="none" stroke="#fff" stroke-width="6"/>
+    <path d="M53 58 h14 v16 a7 7 0 0 1 -14 0 z" fill="#f87171"/>
+    <path d="M46 22 h28" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <!-- molecule dots -->
+  <circle cx="88" cy="74" r="5" fill="#fff"/><circle cx="96" cy="58" r="3.5" fill="#fff"/><path d="M88 74 L96 58" stroke="#fff" stroke-width="2.5"/>
+</svg>

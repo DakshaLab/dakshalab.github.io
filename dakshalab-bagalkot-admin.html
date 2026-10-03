@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Daksha Lab Bagalkot – Admin</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased">
+
+<header class="sticky top-0 z-40 border-b border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <div>
+      <p class="text-lg font-bold text-slate-900">Daksha Lab Bagalkot – Admin</p>
+      <p id="status" class="text-sm text-slate-500">Edit below, then tap Download.</p>
+    </div>
+    <div class="flex gap-2">
+      <button id="discard" type="button" class="btn-outline !px-3 !py-2 text-sm">Discard</button>
+      <button id="download" type="button" class="btn-primary !px-4 !py-2 text-sm">⬇ Download</button>
+    </div>
+  </div>
+  <div class="mx-auto max-w-4xl px-4 pb-3">
+    <div id="tabs" class="flex gap-2 overflow-x-auto pb-1"></div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-4xl space-y-6 px-4 py-6">
+  <div id="panel" class="space-y-6"></div>
+
+  <section class="card">
+    <h2 class="text-lg font-semibold text-slate-900">How to publish your changes</h2>
+    <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm text-slate-700">
+      <li>Tap <strong>⬇ Download</strong>. A zip with the updated <code>config.js</code> and <code>data.js</code> is saved to your phone.</li>
+      <li>Open the zip in the Files app and tap <strong>Extract</strong>.</li>
+      <li>In Chrome (Desktop site on), open the website's GitHub repository and sign in.</li>
+      <li>Tap <strong>Add file → Upload files</strong>, select the extracted files, then <strong>Commit changes</strong>.</li>
+      <li>The website updates in 1–2 minutes.</li>
+    </ol>
+    <p class="mt-3 text-xs text-slate-500">Changes are kept as a draft on this phone until you download or discard them. Nothing on this page publishes by itself; only someone signed in to the GitHub account can update the website.</p>
+  </section>
+</main>
+
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

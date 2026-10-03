@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Daksha Lab logo">
+  <defs>
+    <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#b91c1c"/></linearGradient>
+  </defs>
+  <!-- refreshed red drop: continuity with the current sign -->
+  <path d="M60 8 C60 8 22 52 22 76 a38 38 0 0 0 76 0 C98 52 60 8 60 8z" fill="url(#ga)"/>
+  <!-- pulse line through the drop -->
+  <path d="M30 78 h16 l6 -12 l8 24 l7 -18 l5 6 h18" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- small plus highlight -->
+  <path d="M74 38 v14 M67 45 h14" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+</svg>

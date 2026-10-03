@@ -10,7 +10,8 @@
 <meta property="og:title" content="Contact &amp; Directions | Daksha Lab Bagalkot">
 <meta property="og:description" content="Address, working hours, phone and WhatsApp for Daksha Lab, Bagalkot.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="logo-drop.svg">
+<meta property="og:image" content="https://dakshalab.github.io/og-image.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="contact">
@@ -18,8 +19,8 @@
 <main>
 <section class="page-hero">
   <div class="mx-auto max-w-6xl px-4">
-    <h1 class="h1">Contact &amp; Directions</h1>
-    <p class="mt-2 max-w-2xl text-slate-600">Find us in {{roomNo}}, inside {{hospital.name}} on {{hospital.road}}. Walk in or book an appointment.</p>
+    <h1 class="h1">{{text.contact.title}}</h1>
+    <p class="mt-2 max-w-2xl text-slate-600">{{text.contact.intro}}</p>
   </div>
 </section>
 <section class="py-12">
@@ -27,17 +28,17 @@
     <div data-location="full"></div>
     <div class="grid gap-6 md:grid-cols-2">
       <div class="card">
-        <div class="flex items-center justify-between gap-3"><h2 class="font-semibold text-slate-900">Working hours</h2><span id="open-status"></span></div>
+        <div class="flex items-center justify-between gap-3"><h2 class="font-semibold text-slate-900">{{text.contact.hoursTitle}}</h2><span id="open-status"></span></div>
         <dl id="hours-table" class="mt-3 space-y-1 text-sm text-slate-700"></dl>
       </div>
       <div class="card">
-        <h2 class="font-semibold text-slate-900">Call, message or book</h2>
+        <h2 class="font-semibold text-slate-900">{{text.contact.contactTitle}}</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <a data-tel href="#" class="btn-outline">📞 <span data-site="phoneDisplay" class="ml-1"></span></a>
           <a data-wa="{{messages.general}}" href="#" class="btn-wa"><span data-icon="wa"></span>WhatsApp us</a>
-          <a href="book.html" class="btn-primary sm:col-span-2">📅 Book an appointment online</a>
+          <a href="book.html" class="btn-primary sm:col-span-2">{{text.contact.bookButton}}</a>
         </div>
-        <p class="mt-3 text-sm text-slate-500">Email: <span data-site="email"></span></p>
+        <p class="mt-3 text-sm text-slate-500">{{text.contact.emailLabel}} <span data-site="email"></span></p>
       </div>
     </div>
   </div>

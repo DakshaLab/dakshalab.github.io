@@ -10,7 +10,8 @@
 <meta property="og:title" content="Health Checkup Packages | Daksha Lab Bagalkot">
 <meta property="og:description" content="Full body health checkup packages in Bagalkot from ₹999: Executive, Women's Wellness, Senior Citizen, Diabetes Care and Fever Panel.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Cpath d='M13 7h6M14 7v7l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V7' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="logo-drop.svg">
+<meta property="og:image" content="https://dakshalab.github.io/og-image.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-white font-sans text-slate-800 antialiased" data-page="packages">
@@ -18,22 +19,17 @@
 <main>
 <section class="page-hero">
   <div class="mx-auto max-w-6xl px-4">
-    <h1 class="h1">Health Checkup Packages</h1>
-    <p class="mt-2 max-w-2xl text-slate-600">Complete preventive checkups for every age, with pathologist-verified reports, at our lab inside {{hospital.name}}.</p>
+    <h1 class="h1">{{text.packages.title}}</h1>
+    <p class="mt-2 max-w-2xl text-slate-600">{{text.packages.intro}}</p>
   </div>
 </section>
 <section class="py-12">
   <div class="mx-auto max-w-6xl px-4">
     <div id="package-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
     <div class="mt-10 rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200">
-      <h2 class="text-lg font-semibold text-slate-900">Which package is right for me?</h2>
-      <ul class="mt-3 space-y-2 text-sm text-slate-700">
-        <li>• <strong>Under 30, feeling fine:</strong> Basic Health Checkup once a year.</li>
-        <li>• <strong>30+ or desk job:</strong> Executive Health Checkup once a year.</li>
-        <li>• <strong>Diabetic:</strong> Diabetes Care every 3 months.</li>
-        <li>• <strong>Parents 60+:</strong> Senior Citizen Package every 6–12 months.</li>
-      </ul>
-      <p class="mt-3 text-sm text-slate-500">Not sure? <a data-wa="{{messages.package}}" href="#" class="font-semibold text-teal-700 hover:underline">Ask us on WhatsApp</a>. Always follow your doctor's advice.</p>
+      <h2 class="text-lg font-semibold text-slate-900">{{text.packages.guideTitle}}</h2>
+      <ul class="mt-3 space-y-2 text-sm text-slate-700" data-list="text.packages.guide"><template><li>• {{.}}</li></template></ul>
+      <p class="mt-3 text-sm text-slate-500">{{text.packages.guideNote}} <a data-wa="{{messages.package}}" href="#" class="font-semibold text-teal-700 hover:underline">{{text.packages.guideButton}}</a> · <a href="policies.html#disclaimer" class="underline">Disclaimer</a></p>
     </div>
   </div>
 </section>

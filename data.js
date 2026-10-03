@@ -1,5 +1,5 @@
 /* =====================================================================
-   DAKSHA LAB – CATALOG  (tests, packages, FAQs)
+   DAKSHA LAB – CATALOG  (tests, packages, FAQs, testimonials)
    ---------------------------------------------------------------------
    Phone, address, hours, offers and other settings are in config.js.
 
@@ -92,5 +92,19 @@ const FAQS = [
   { q: "Who checks my report?", a: "Every report is reviewed and signed by a qualified MD pathologist before it is released." },
   { q: "How do I pay?", a: "Pay at the lab by cash or UPI (Google Pay, PhonePe, Paytm)." },
   { q: "Do I need a doctor's prescription?", a: "Not for most routine tests. If you have a prescription, send a photo on WhatsApp and we will book the right tests for you." },
-  { q: "Is my information kept private?", a: "Yes. Your details and reports are used only for your testing and are shared only with you (and your doctor if you ask us to)." },
+  { q: "Is {{name}} part of {{hospital.name}}?", a: "{{relationText}}" },
+  { q: "Can I use the website or WhatsApp in an emergency?", a: "No. In a medical emergency call {{legal.emergencyNumber}} or go to the nearest casualty / emergency department immediately." },
+  { q: "Is my information kept private?", a: "Yes. Your details and reports are used only for your testing and are shared only with you (and your doctor if you ask us to). See the Policies page for full details." },
 ];
+
+/* ---------------------------------------------------------------------
+   TESTIMONIALS (shown when live Google reviews are not set up)
+   { name: "Patient name", stars: 5, text: "What they said", link: "https://…" }
+   --------------------------------------------------------------------- */
+const TESTIMONIALS = [];
+
+/* ---------------------------------------------------------------------
+   OWN PHOTOS (uploaded via the admin page; shown on the About page
+   before the Google Maps photos)   { src: "photo-123.jpg", caption: "Reception" }
+   --------------------------------------------------------------------- */
+const GALLERY = [];

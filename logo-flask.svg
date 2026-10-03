@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Daksha Lab logo">
+  <defs>
+    <linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0f766e"/></linearGradient>
+  </defs>
+  <rect x="6" y="6" width="108" height="108" rx="28" fill="url(#gb)"/>
+  <!-- letter D formed by a flask: neck on the left, round body -->
+  <path d="M40 28 h22 a32 32 0 0 1 0 64 h-22 z" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
+  <!-- liquid level inside the D -->
+  <path d="M44 66 q9 -6 18 0 t20 0 v4 a24 24 0 0 1 -20 18 h-18 z" fill="#5eead4"/>
+  <!-- bubbles -->
+  <circle cx="58" cy="50" r="4" fill="#ccfbf1"/><circle cx="68" cy="42" r="3" fill="#ccfbf1"/>
+</svg>
