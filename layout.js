@@ -31,6 +31,11 @@ const ICON = {
   flask: '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 14h9"/></svg>',
 };
 
+/* ---------- hours helpers ---------- */
+const is24h = h => h.open === "00:00" && (h.close === "24:00" || h.close === "23:59");
+const fmtTime = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return h + ":" + String(m).padStart(2, "0") + " " + ap; };
+const hoursText = h => (is24h(h) ? "Open 24 hours" : fmtTime(h.open) + " – " + fmtTime(h.close));
+
 /* ---------- open / closed status in India time ---------- */
 function openStatus() {
   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
@@ -38,6 +43,7 @@ function openStatus() {
   const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
   const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return h + ":" + String(m).padStart(2, "0") + " " + ap; };
   const today = SITE.hours.find(h => h.days.includes(day));
+  if (today && is24h(today)) return { open: true, text: "Open 24 hours" };
   if (today && mins >= toMin(today.open) && mins < toMin(today.close)) return { open: true, text: "Open now · until " + fmt(today.close) };
   if (today && mins < toMin(today.open)) return { open: false, text: "Closed · opens " + fmt(today.open) };
   for (let i = 1; i <= 7; i++) {
@@ -87,7 +93,7 @@ function renderFooter() {
   const el = document.getElementById("site-footer");
   if (!el) return;
   const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return h + ":" + String(m).padStart(2, "0") + " " + ap; };
-  const hours = SITE.hours.map(h => `<div class="flex justify-between gap-4"><dt>${esc(h.label)}</dt><dd class="text-white">${fmt(h.open)} – ${fmt(h.close)}</dd></div>`).join("");
+  const hours = SITE.hours.map(h => `<div class="flex justify-between gap-4"><dt>${esc(h.label)}</dt><dd class="text-white">${hoursText(h)}</dd></div>`).join("");
   el.outerHTML = `
   <footer class="bg-slate-900 pb-20 text-slate-300 lg:pb-0">
     <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -159,7 +165,7 @@ function addStructuredData() {
     "@context": "https://schema.org", "@type": "MedicalBusiness", name: SITE.name, url: SITE.siteUrl,
     telephone: "+" + SITE.phone, email: SITE.email, hasMap: SITE.mapsLink,
     address: { "@type": "PostalAddress", streetAddress: `${SITE.roomNo}, ${SITE.hospital.name}, ${SITE.hospital.building}, ${SITE.hospital.road}, ${SITE.hospital.area}`, addressLocality: SITE.city, addressRegion: SITE.state, postalCode: SITE.pin, addressCountry: "IN" },
-    openingHours: SITE.hours.map(h => h.days.map(x => d[x]).join(",") + " " + h.open + "-" + h.close),
+    openingHours: SITE.hours.map(h => h.days.map(x => d[x]).join(",") + " " + (is24h(h) ? "00:00-23:59" : h.open + "-" + h.close)),
     containedInPlace: { "@type": "Hospital", name: SITE.hospital.name, address: SITE.hospital.address, hasMap: SITE.hospital.mapsLink },
   };
   const s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(data);

@@ -260,7 +260,7 @@ function initContact() {
   const fmt = t => { let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return h + ":" + String(m).padStart(2, "0") + " " + ap; };
   document.getElementById("hours-table").innerHTML = SITE.hours.map(h => `
     <div class="flex justify-between gap-4 rounded-lg px-3 py-2 ${h.days.includes(day) ? "bg-teal-50 font-semibold text-teal-900" : ""}">
-      <dt>${esc(h.label)}${h.days.includes(day) ? " (today)" : ""}</dt><dd>${fmt(h.open)} – ${fmt(h.close)}</dd></div>`).join("");
+      <dt>${esc(h.label)}${h.days.includes(day) ? " (today)" : ""}</dt><dd>${hoursText(h)}</dd></div>`).join("");
   const st = openStatus();
   const s = document.getElementById("open-status");
   s.textContent = st.text;
